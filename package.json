@@ -1,0 +1,30 @@
+{
+  "name": "maldito-sistema-opresor",
+  "version": "1.0.0",
+  "description": "A system to manage NFC checkins/checkouts.",
+  "main": "main.js",
+  "scripts": {
+    "test": "echo No test"
+  },
+  "keywords": [
+    "nfc",
+    "checkin",
+    "checkout"
+  ],
+  "author": "Javier Rizzo",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JavierRizzoA/MalditoSistemaOpresor.git"
+  },
+  "bugs": {
+    "url": "https://github.com/JavierRizzoA/MalditoSistemaOpresor/issues"
+  },
+  "homepage": "https://github.com/JavierRizzoA/MalditoSistemaOpresor#readme",
+  "dependencies": {
+    "body-parser": "^1.17.1",
+    "express": "^4.15.2",
+    "sqlite3": "^3.1.8"
+  },
+  "devDependencies": {}
+}
