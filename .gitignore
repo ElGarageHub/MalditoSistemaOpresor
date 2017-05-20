@@ -1,4 +1,3 @@
 database.db
-sql/
 node_modules/
 *.sw*

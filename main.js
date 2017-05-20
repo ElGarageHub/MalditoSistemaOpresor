@@ -3,6 +3,7 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const sqlite3 = require('sqlite3').verbose();
 const util = require('util');
+const fs = require('fs');
 
 let app = express();
 app.use(express.static('www'));
@@ -15,27 +16,36 @@ let db = new sqlite3.Database(path.join(__dirname, 'database.db'));
 
 app.post('/new-user', function(req, res) {
   //TODO: Sanitize
-  db.run(util.format(
-        "INSERT INTO Users(id, name, lastname, tag) "
-        + "VALUES(abs(random()), '%s', '%s', '%s')",
-        req.body.name,
-        req.body.lastname,
-        req.body.tag
-        ));
-  //res.sendFile();
+  //TODO: Send response
+  //TODO: Handle errors
+  fs.readFile('sql/NewUser.sql', 'utf-8', function(err, data) {
+    if(!err) {
+      db.run(data, {
+        "@name": req.body.name,
+        "@lastname": req.body.lastname,
+        "@tag": req.body.tag
+      });
+    } else {
+
+    }
+  });
 });
 
 app.post('/new-check', function(req, res) {
   //TODO: Change to Arduino
-  let userFromTag = "SELECT id FROM Users WHERE tag = '%s' LIMIT 1";
-  let countChecks = "SELECT (COUNT(*) + 1) % 2 FROM Checks "
-    + "WHERE userId = (" + userFromTag + ") AND time >= DATE('now') "
-    + "AND time < DATE('now', '+1 day')";
-  db.run(util.format(
-        "INSERT INTO Checks(id, userId, time, inout)"
-        + "VALUES(ABS(RANDOM()), (" + userFromTag + "), DATETIME('now'), ("
-        + countChecks + "))",
-        req.body.tag, req.body.tag));
+  //TODO: Handle errors
+  fs.readFile('sql/NewCheck.sql', 'utf-8', function(err, data) {
+    if(!err) {
+      db.run(data, {
+        "@tag": req.body.tag
+      });
+    } else {
+
+    }
+  });
+});
+
+app.post('/get-report', function(req, res) {
 });
 
 process.on('SIGINT', function() {
